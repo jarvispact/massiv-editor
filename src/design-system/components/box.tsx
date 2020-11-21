@@ -15,7 +15,7 @@ import { ShadowProps, shadowConfig } from '../system/shadow';
 import { WidthProps, widthConfig } from '../system/width';
 import { Theme } from '../theme/default-theme';
 import { buildCss } from '../utils/build-css';
-import { shouldForwardProp } from '../utils/should-forward-prop';
+import { createShouldForwardProp, shouldForwardProp } from '../utils/should-forward-prop';
 
 export type BoxSystemProps<T extends Theme> = ColorProps<T> &
     BorderProps<T> &
@@ -31,7 +31,9 @@ export type BoxSystemProps<T extends Theme> = ColorProps<T> &
     DisplayProps &
     OverflowProps;
 
-export type BoxProps<T extends Theme = Theme> = React.HTMLAttributes<HTMLDivElement> &
+export type BoxProps<T extends Theme = Theme, HTMLElem extends HTMLElement = HTMLDivElement> = React.HTMLAttributes<
+    HTMLElem
+> &
     BoxSystemProps<T> & {
         as?: React.ElementType;
         children?: React.ReactNode;
@@ -56,7 +58,15 @@ export const boxConfig = [
     ...heightConfig,
 ];
 
-export const Box: React.FC<BoxProps> = styled.div.withConfig({ shouldForwardProp })`
+type CreateBoxOptions = {
+    forwardPropertyBlacklist?: Array<string>;
+};
+
+export const createBox = (options: CreateBoxOptions = {}) => styled.div.withConfig({
+    shouldForwardProp: options.forwardPropertyBlacklist
+        ? createShouldForwardProp(options.forwardPropertyBlacklist)
+        : shouldForwardProp,
+})`
     ${buildCss(boxConfig)}
     &:hover {
         ${buildCss(boxConfig, '_hover')}
@@ -66,4 +76,7 @@ export const Box: React.FC<BoxProps> = styled.div.withConfig({ shouldForwardProp
     }
 `;
 
-export const getBoxWithCustomTheme = <CustomTheme extends Theme>() => Box as React.FC<BoxProps<CustomTheme>>;
+export const Box: React.FC<BoxProps> = createBox();
+
+export const getBoxWithCustomTheme = <CustomTheme extends Theme, HTMLElem extends HTMLElement = HTMLDivElement>() =>
+    Box as React.FC<BoxProps<CustomTheme, HTMLElem>>;

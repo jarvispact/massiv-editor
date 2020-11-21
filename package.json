@@ -20,6 +20,8 @@
   },
   "homepage": "https://github.com/jarvispact/massiv-editor#readme",
   "dependencies": {
+    "gl-matrix": "^3.3.0",
+    "massiv-3d": "0.0.5",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "styled-components": "^5.2.1"

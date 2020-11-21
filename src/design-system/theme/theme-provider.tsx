@@ -6,12 +6,12 @@ type Themes = {
     [key: string]: Theme;
 };
 
-type Ctx = {
-    theme: Theme;
+type Ctx<T extends Theme> = {
+    theme: T;
     setTheme: (t: string) => void;
 };
 
-export const ThemeContext = React.createContext<Ctx>({
+export const ThemeContext = React.createContext<Ctx<Theme>>({
     theme: defaultTheme,
     setTheme: () => {},
 });
@@ -37,4 +37,4 @@ export const ThemeProvider = <T extends Themes>({ themes, theme, children }: Pro
     );
 };
 
-export const useTheme = () => useContext(ThemeContext);
+export const useTheme = <T extends Theme>() => useContext<Ctx<T>>((ThemeContext as any) as React.Context<Ctx<T>>);

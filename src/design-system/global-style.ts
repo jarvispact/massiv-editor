@@ -51,4 +51,7 @@ export const GlobalStyle = createGlobalStyle`
         box-sizing: border-box;
         font-family: ${(props) => props.theme.fontFamily.sans};
     }
+    input:focus {
+        outline: solid 1.5px ${(props) => props.theme.color.primary500};
+    }
 `;

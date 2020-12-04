@@ -1,8 +1,8 @@
+import { Transform } from 'massiv-3d';
 import React, { useEffect, useState } from 'react';
 import { Box } from '../components/box';
 import { PanelInput } from '../components/panel-input';
 import { PanelLabel } from '../components/panel-label';
-import { Transform } from '../../engine/components/transform';
 
 type Props = {
     transform: Transform;
@@ -32,14 +32,14 @@ export const Quaternion = ({ transform }: Props) => {
                         const number = parseFloat(e.target.value);
                         setX(e.target.value);
                         if (!Number.isNaN(number)) {
-                            Transform.setQuaternionX(transform, number);
+                            transform.setQuaternionX(number);
                         }
                     }}
                     onBlur={(e: React.FocusEvent<HTMLInputElement>) => {
                         const number = parseFloat(e.target.value);
                         if (Number.isNaN(number)) {
                             setX('0');
-                            Transform.setQuaternionX(transform, 0);
+                            transform.setQuaternionX(0);
                         }
                     }}
                 />
@@ -50,14 +50,14 @@ export const Quaternion = ({ transform }: Props) => {
                         const number = parseFloat(e.target.value);
                         setY(e.target.value);
                         if (!Number.isNaN(number)) {
-                            Transform.setQuaternionY(transform, number);
+                            transform.setQuaternionY(number);
                         }
                     }}
                     onBlur={(e: React.FocusEvent<HTMLInputElement>) => {
                         const number = parseFloat(e.target.value);
                         if (Number.isNaN(number)) {
                             setY('0');
-                            Transform.setQuaternionY(transform, 0);
+                            transform.setQuaternionY(0);
                         }
                     }}
                 />
@@ -68,14 +68,14 @@ export const Quaternion = ({ transform }: Props) => {
                         const number = parseFloat(e.target.value);
                         setZ(e.target.value);
                         if (!Number.isNaN(number)) {
-                            Transform.setQuaternionZ(transform, number);
+                            transform.setQuaternionZ(number);
                         }
                     }}
                     onBlur={(e: React.FocusEvent<HTMLInputElement>) => {
                         const number = parseFloat(e.target.value);
                         if (Number.isNaN(number)) {
                             setZ('0');
-                            Transform.setQuaternionZ(transform, 0);
+                            transform.setQuaternionZ(0);
                         }
                     }}
                 />
@@ -86,14 +86,14 @@ export const Quaternion = ({ transform }: Props) => {
                         const number = parseFloat(e.target.value);
                         setW(e.target.value);
                         if (!Number.isNaN(number)) {
-                            Transform.setQuaternionW(transform, number);
+                            transform.setQuaternionW(number);
                         }
                     }}
                     onBlur={(e: React.FocusEvent<HTMLInputElement>) => {
                         const number = parseFloat(e.target.value);
                         if (Number.isNaN(number)) {
                             setW('0');
-                            Transform.setQuaternionW(transform, 0);
+                            transform.setQuaternionW(1);
                         }
                     }}
                 />

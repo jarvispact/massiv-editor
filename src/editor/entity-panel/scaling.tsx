@@ -1,8 +1,8 @@
+import { Transform } from 'massiv-3d';
 import React, { useEffect, useState } from 'react';
 import { Box } from '../components/box';
 import { PanelInput } from '../components/panel-input';
 import { PanelLabel } from '../components/panel-label';
-import { Transform } from '../../engine/components/transform';
 
 type Props = {
     transform: Transform;
@@ -30,14 +30,14 @@ export const Scaling = ({ transform }: Props) => {
                         const number = parseFloat(e.target.value);
                         setX(e.target.value);
                         if (!Number.isNaN(number)) {
-                            Transform.setScalingX(transform, number);
+                            transform.setScaleX(number);
                         }
                     }}
                     onBlur={(e: React.FocusEvent<HTMLInputElement>) => {
                         const number = parseFloat(e.target.value);
                         if (Number.isNaN(number)) {
                             setX('0');
-                            Transform.setScalingX(transform, 0);
+                            transform.setScaleX(0);
                         }
                     }}
                 />
@@ -48,14 +48,14 @@ export const Scaling = ({ transform }: Props) => {
                         const number = parseFloat(e.target.value);
                         setY(e.target.value);
                         if (!Number.isNaN(number)) {
-                            Transform.setScalingY(transform, number);
+                            transform.setScaleY(number);
                         }
                     }}
                     onBlur={(e: React.FocusEvent<HTMLInputElement>) => {
                         const number = parseFloat(e.target.value);
                         if (Number.isNaN(number)) {
                             setY('0');
-                            Transform.setScalingY(transform, 0);
+                            transform.setScaleY(0);
                         }
                     }}
                 />
@@ -66,14 +66,14 @@ export const Scaling = ({ transform }: Props) => {
                         const number = parseFloat(e.target.value);
                         setZ(e.target.value);
                         if (!Number.isNaN(number)) {
-                            Transform.setScalingZ(transform, number);
+                            transform.setScaleZ(number);
                         }
                     }}
                     onBlur={(e: React.FocusEvent<HTMLInputElement>) => {
                         const number = parseFloat(e.target.value);
                         if (Number.isNaN(number)) {
                             setZ('0');
-                            Transform.setScalingZ(transform, 0);
+                            transform.setScaleZ(0);
                         }
                     }}
                 />

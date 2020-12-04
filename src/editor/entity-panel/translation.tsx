@@ -1,8 +1,8 @@
+import { Transform } from 'massiv-3d';
 import React, { useEffect, useState } from 'react';
 import { Box } from '../components/box';
 import { PanelInput } from '../components/panel-input';
 import { PanelLabel } from '../components/panel-label';
-import { Transform } from '../../engine/components/transform';
 
 type Props = {
     transform: Transform;
@@ -30,14 +30,14 @@ export const Translation = ({ transform }: Props) => {
                         const number = parseFloat(e.target.value);
                         setX(e.target.value);
                         if (!Number.isNaN(number)) {
-                            Transform.setTranslationX(transform, number);
+                            transform.setTranslationX(number);
                         }
                     }}
                     onBlur={(e: React.FocusEvent<HTMLInputElement>) => {
                         const number = parseFloat(e.target.value);
                         if (Number.isNaN(number)) {
                             setX('0');
-                            Transform.setTranslationX(transform, 0);
+                            transform.setTranslationX(0);
                         }
                     }}
                 />
@@ -48,14 +48,14 @@ export const Translation = ({ transform }: Props) => {
                         const number = parseFloat(e.target.value);
                         setY(e.target.value);
                         if (!Number.isNaN(number)) {
-                            Transform.setTranslationY(transform, number);
+                            transform.setTranslationY(number);
                         }
                     }}
                     onBlur={(e: React.FocusEvent<HTMLInputElement>) => {
                         const number = parseFloat(e.target.value);
                         if (Number.isNaN(number)) {
                             setY('0');
-                            Transform.setTranslationY(transform, 0);
+                            transform.setTranslationY(0);
                         }
                     }}
                 />
@@ -66,14 +66,14 @@ export const Translation = ({ transform }: Props) => {
                         const number = parseFloat(e.target.value);
                         setZ(e.target.value);
                         if (!Number.isNaN(number)) {
-                            Transform.setTranslationZ(transform, number);
+                            transform.setTranslationZ(number);
                         }
                     }}
                     onBlur={(e: React.FocusEvent<HTMLInputElement>) => {
                         const number = parseFloat(e.target.value);
                         if (Number.isNaN(number)) {
                             setZ('0');
-                            Transform.setTranslationZ(transform, 0);
+                            transform.setTranslationZ(0);
                         }
                     }}
                 />

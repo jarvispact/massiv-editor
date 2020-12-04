@@ -12,14 +12,7 @@ const gridTemplateAreas = `
 
 export const Layout = ({ children }: Props) => {
     return (
-        <Box
-            display="grid"
-            gridTemplateAreas={gridTemplateAreas}
-            gridTemplateRows="40% 60%"
-            gridTemplateColumns="auto 300px"
-            w="100vw"
-            h="100vh"
-        >
+        <Box display="grid" gridTemplateAreas={gridTemplateAreas} gridTemplateRows="40% 60%" gridTemplateColumns="auto 300px" w="100vw" h="100vh">
             {children}
         </Box>
     );

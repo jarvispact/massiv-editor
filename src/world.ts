@@ -1,6 +1,7 @@
-import { World } from 'massiv-3d';
+import { mat4, vec3 } from 'gl-matrix';
+import { Transform, UBO, World } from 'massiv-3d';
 import { PerspectiveCamera } from './engine/camera/perspective-camera';
-import { Transform } from './engine/components/transform';
+import { createRenderBoundingBoxSystem } from './engine/systems/render-bounding-box-system';
 import { createWebgl2RenderSystem } from './engine/systems/webgl-2-render-system';
 
 const initialState = { autoUpdate: true };
@@ -27,24 +28,25 @@ export const world = new World<State, Action>({
     },
 });
 
-export const initializeEngine = async (canvas: HTMLCanvasElement, gl: WebGL2RenderingContext) => {
-    const camera = new PerspectiveCamera({
-        translation: [0, 2, 3],
-        fov: 45,
-        aspect: canvas.width / canvas.height,
-        near: 0.01,
-        far: 1000,
-    });
+const cameraUBOConfig = {
+    'CameraUniforms.translation': { data: vec3.fromValues(0, 0, 0) },
+    'CameraUniforms.viewMatrix': { data: mat4.fromValues(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1) },
+    'CameraUniforms.projectionMatrix': { data: mat4.fromValues(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1) },
+};
 
-    world.addSystem(createWebgl2RenderSystem(canvas, gl, camera));
+type UBOConfig = typeof cameraUBOConfig;
 
-    world.addSystem((delta) => {
-        const entities = world.queryEntities(['Transform']);
-        entities.forEach((e) => {
-            const t = e.getComponent('Transform') as Transform;
-            if (world.state.autoUpdate) Transform.rotate(t, 0, 45 * delta, 0);
-        });
-    });
+export const initializeEngine = async (canvas: HTMLCanvasElement, gl: WebGL2RenderingContext, cameraUBO: UBO<UBOConfig>) => {
+    world.addSystem(createWebgl2RenderSystem(canvas, gl, cameraUBO));
+    world.addSystem(createRenderBoundingBoxSystem(canvas, gl, cameraUBO));
+
+    // world.addSystem((delta) => {
+    //     const entities = world.queryEntities(['Transform']);
+    //     entities.forEach((e) => {
+    //         const t = e.getComponentByClass(Transform);
+    //         if (world.state.autoUpdate) t.rotate(0, 45 * delta, 0).update();
+    //     });
+    // });
 
     const tick = (time: number) => {
         world.update(time);

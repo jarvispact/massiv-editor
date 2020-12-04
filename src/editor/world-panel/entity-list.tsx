@@ -21,13 +21,7 @@ export const EntityList = () => {
     return (
         <Box as="ul">
             {entities.map((e) => (
-                <Box
-                    as="li"
-                    color="panelText"
-                    fontWeight={selectedEntity === e ? '2xl' : undefined}
-                    key={e.name}
-                    onClick={() => setSelectedEntity(e)}
-                >
+                <Box as="li" color="panelText" fontWeight={selectedEntity === e ? '2xl' : undefined} key={e.name} onClick={() => setSelectedEntity(e)}>
                     {e.name}
                 </Box>
             ))}

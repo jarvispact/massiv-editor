@@ -1,6 +1,6 @@
+import { Transform as T } from 'massiv-3d';
 import React from 'react';
 import { PanelHeading } from '../components/panel-heading';
-import { Transform as T } from '../../engine/components/transform';
 import { Quaternion } from './quaternion';
 import { Scaling } from './scaling';
 import { Translation } from './translation';

@@ -20,8 +20,7 @@ export abstract class AbstractCamera {
         this.lookAtVector = args.lookAt || vec3.fromValues(0, 0, 0);
         this.upVector = args.upVector || vec3.fromValues(0, 1, 0);
         this.viewMatrix = args.viewMatrix || mat4.fromValues(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
-        this.projectionMatrix =
-            args.projectionMatrix || mat4.fromValues(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
+        this.projectionMatrix = args.projectionMatrix || mat4.fromValues(1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1, 0, 0, 0, 0, 1);
         mat4.lookAt(this.viewMatrix, this.translation, this.lookAtVector, this.upVector);
     }
 

@@ -9,7 +9,7 @@ import { UI } from './editor/ui/ui';
 
 const App = () => {
     return (
-        <ThemeProvider themes={themes} theme="light">
+        <ThemeProvider themes={themes} theme="dark">
             <GlobalStyle />
             <EngineProvider>
                 <Layout>

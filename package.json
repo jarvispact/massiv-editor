@@ -22,7 +22,7 @@
   "dependencies": {
     "buffer": "^6.0.3",
     "gl-matrix": "^3.3.0",
-    "massiv-3d": "0.0.16",
+    "massiv-3d": "0.0.17",
     "massiv-design-system": "^0.0.52",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",

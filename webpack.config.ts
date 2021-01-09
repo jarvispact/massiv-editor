@@ -19,6 +19,7 @@ const config: webpack.Configuration = {
     },
     resolve: {
         extensions: ['.tsx', '.ts', '.js'],
+        fallback: { stream: require.resolve('stream-browserify'), buffer: require.resolve('buffer/') },
     },
     output: {
         path: path.resolve(__dirname, 'dist'),
@@ -27,7 +28,7 @@ const config: webpack.Configuration = {
     devServer: {
         contentBase: path.join(__dirname, 'dist'),
         compress: true,
-        port: 3000,
+        port: 9090,
     },
 };
 

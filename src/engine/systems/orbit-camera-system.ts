@@ -35,8 +35,8 @@ export const createOrbitCameraSystem = ({ mouseInput, world }: OrbitCameraSystem
             if (mouseInput.isButtonDown('AUXILIARY')) {
                 const movementX = (mouseX - lastMouseX) * delta;
                 const movementY = (lastMouseY - mouseY) * delta;
-                spherical[1] = lerp(spherical[1], spherical[1] + movementY, 0.2);
-                spherical[2] = lerp(spherical[2], spherical[2] - movementX, 0.2);
+                spherical[1] = lerp(spherical[1], spherical[1] + movementY, 0.1);
+                spherical[2] = lerp(spherical[2], spherical[2] - movementX, 0.1);
                 if (spherical[1] > 1.4) spherical[1] = 1.4;
                 if (spherical[1] < 0.1) spherical[1] = 0.1;
             }

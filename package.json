@@ -22,10 +22,11 @@
   "dependencies": {
     "buffer": "^6.0.3",
     "gl-matrix": "^3.3.0",
-    "massiv-3d": "0.0.17",
+    "massiv-3d": "0.0.18",
     "massiv-design-system": "^0.0.52",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
+    "simplex-noise": "^2.4.0",
     "stream-browserify": "^3.0.0"
   },
   "devDependencies": {
@@ -35,6 +36,7 @@
     "@babel/preset-react": "^7.12.10",
     "@babel/preset-typescript": "^7.12.7",
     "@babel/runtime": "^7.12.5",
+    "@types/copy-webpack-plugin": "^6.4.0",
     "@types/fork-ts-checker-webpack-plugin": "^0.4.5",
     "@types/react": "^17.0.0",
     "@types/react-dom": "^17.0.0",
@@ -44,6 +46,7 @@
     "@typescript-eslint/eslint-plugin": "^4.12.0",
     "@typescript-eslint/parser": "^4.12.0",
     "babel-loader": "^8.2.2",
+    "copy-webpack-plugin": "^7.0.0",
     "eslint": "^7.17.0",
     "eslint-config-prettier": "^7.1.0",
     "eslint-plugin-prettier": "^3.3.1",

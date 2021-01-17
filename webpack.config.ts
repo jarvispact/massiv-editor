@@ -1,5 +1,6 @@
 import path from 'path';
 import webpack from 'webpack';
+import CopyPlugin from 'copy-webpack-plugin';
 
 const config: webpack.Configuration = {
     entry: './src/index.tsx',
@@ -25,6 +26,11 @@ const config: webpack.Configuration = {
         path: path.resolve(__dirname, 'dist'),
         filename: 'bundle.js',
     },
+    plugins: [
+        new CopyPlugin({
+            patterns: [{ from: 'src/assets', to: 'assets' }],
+        }),
+    ],
     devServer: {
         contentBase: path.join(__dirname, 'dist'),
         compress: true,

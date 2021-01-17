@@ -6,12 +6,13 @@ import { Layout } from './editor/layout/layout';
 import { EngineProvider } from './engine/engine-provider';
 import { themes } from './themes';
 import { UI } from './editor/ui/ui';
+import { World } from 'massiv-3d';
 
 const App = () => {
     return (
         <ThemeProvider themes={themes} theme="dark">
             <GlobalStyle />
-            <EngineProvider>
+            <EngineProvider world={new World()}>
                 <Layout>
                     <Canvas />
                     <UI />

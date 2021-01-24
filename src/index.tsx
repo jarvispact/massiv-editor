@@ -5,17 +5,20 @@ import { Canvas } from './editor/canvas/canvas';
 import { Layout } from './editor/layout/layout';
 import { EngineProvider } from './engine/engine-provider';
 import { themes } from './themes';
-import { UI } from './editor/ui/ui';
-import { World } from 'massiv-3d';
+import { MenuContainer } from './editor/menu/menu-container';
+import { WorldPanel } from './editor/world-panel/world-panel';
+import { EntityPanel } from './editor/entity-panel/entity-panel';
 
 const App = () => {
     return (
         <ThemeProvider themes={themes} theme="dark">
             <GlobalStyle />
-            <EngineProvider world={new World()}>
+            <EngineProvider>
                 <Layout>
+                    <MenuContainer />
                     <Canvas />
-                    <UI />
+                    <WorldPanel />
+                    <EntityPanel />
                 </Layout>
             </EngineProvider>
         </ThemeProvider>

@@ -1,6 +1,5 @@
 import { mat3, mat4, vec3 } from 'gl-matrix';
 import {
-    createTexture2D,
     createWebgl2ArrayBuffer,
     createWebgl2Program,
     createWebgl2Shader,
@@ -13,23 +12,22 @@ import {
     UBO,
     World,
 } from 'massiv-3d';
+import { ActiveCameraTag } from '../components/active-camera-tag';
+import { Geometry } from '../components/geometry';
+import { NormalMaterial } from '../components/normal-material';
 import { PerspectiveCamera } from '../components/perspective-camera';
-import { Renderable } from '../components/renderable';
+import { RenderableTag } from '../components/renderable-tag';
 import { Transform } from '../components/transform';
 
 type RenderSystemArgs = {
     canvas: HTMLCanvasElement;
     world: World;
     gl: WebGL2RenderingContext;
-    colorRaster: HTMLImageElement;
 };
 
 const vs = glsl300({
     attributes: [GLSL300ATTRIBUTE.POSITION, GLSL300ATTRIBUTE.UV, GLSL300ATTRIBUTE.NORMAL],
-    out: [
-        { name: 'vUv', type: 'vec2' },
-        { name: 'vNormal', type: 'vec3' },
-    ],
+    out: [{ name: 'vNormal', type: 'vec3' }],
 })`
     struct Camera {
         vec3 translation;
@@ -45,7 +43,6 @@ const vs = glsl300({
     uniform mat3 normalMatrix;
 
     void main() {
-        vUv = uv;
         vNormal = normalMatrix * normal;
         gl_Position = camera.projectionMatrix * camera.viewMatrix * modelMatrix * vec4(position, 1.0);
     }
@@ -55,19 +52,8 @@ const fs = glsl300({
     in: vs.config.out,
     out: [{ name: 'fragColor', type: 'vec4' }],
 })`
-    uniform sampler2D colorRaster;
-
-    vec3 lightDirection = vec3(3.0, 1.0, 1.0);
-    vec3 lightDiffuse = vec3(0.8, 0.8, 0.8);
-
     void main() {
-        vec3 texel = texture(colorRaster, vUv).rgb;
-        vec3 ambient = texel * 0.2;
-        vec3 direction = normalize(lightDirection);
-        vec3 normal = normalize(vNormal);
-        float diff = max(dot(normal, direction), 0.0);
-        vec3 diffuse = lightDiffuse * diff * texel;
-        fragColor = vec4(ambient + diffuse, 1.0);
+        fragColor = vec4(normalize(vNormal), 1.0);
     }
 `;
 
@@ -88,7 +74,7 @@ type CachedItem = {
     cleanup: () => void;
 };
 
-export const createRenderSystem = ({ canvas, world, gl, colorRaster }: RenderSystemArgs): System => {
+export const createRenderSystem = ({ canvas, world, gl }: RenderSystemArgs): System => {
     const vertexShader = createWebgl2Shader(gl, gl.VERTEX_SHADER, vs.sourceCode);
     const fragmentShader = createWebgl2Shader(gl, gl.FRAGMENT_SHADER, fs.sourceCode);
     const shaderProgram = createWebgl2Program(gl, vertexShader, fragmentShader);
@@ -96,11 +82,6 @@ export const createRenderSystem = ({ canvas, world, gl, colorRaster }: RenderSys
 
     const modelMatrixLocation = gl.getUniformLocation(shaderProgram, 'modelMatrix');
     const normalMatrixLocation = gl.getUniformLocation(shaderProgram, 'normalMatrix');
-    const colorRasterLocation = gl.getUniformLocation(shaderProgram, 'colorRaster');
-    const colorRasterTexture = createTexture2D(gl, colorRaster);
-    gl.activeTexture(gl.TEXTURE0 + 0);
-    gl.bindTexture(gl.TEXTURE_2D, colorRasterTexture);
-    gl.uniform1i(colorRasterLocation, 0);
 
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
@@ -129,36 +110,38 @@ export const createRenderSystem = ({ canvas, world, gl, colorRaster }: RenderSys
 
     world.subscribe((action) => {
         if (action.type === 'ADD-ENTITY') {
-            const camera = action.payload.getComponentByClass(PerspectiveCamera);
-            const transform = action.payload.getComponentByClass(Transform);
-            const renderable = action.payload.getComponentByClass(Renderable);
-            if (camera) {
-                cameraCache.camera = camera;
+            const activeCamera = world.getComponent(action.payload, ActiveCameraTag);
+            const transform = world.getComponent(action.payload, Transform);
+            const renderable = world.getComponent(action.payload, RenderableTag);
+            const material = world.getComponent(action.payload, NormalMaterial);
+            const geometry = world.getComponent(action.payload, Geometry);
+
+            if (activeCamera) {
+                cameraCache.camera = world.getComponent(action.payload, PerspectiveCamera);
             } else if (transform && renderable) {
                 const vao = createWebgl2VertexArray(gl);
 
-                const positionBuffer = createWebgl2ArrayBuffer(gl, new Float32Array(renderable.data.positions));
+                const positionBuffer = createWebgl2ArrayBuffer(gl, new Float32Array(geometry.data.positions));
                 setupWebgl2VertexAttribPointer(gl, GLSL300ATTRIBUTE.POSITION.location, 3);
 
-                const uvBuffer = createWebgl2ArrayBuffer(gl, new Float32Array(renderable.data.uvs));
-                setupWebgl2VertexAttribPointer(gl, GLSL300ATTRIBUTE.UV.location, 2);
-
-                const normalBuffer = createWebgl2ArrayBuffer(gl, new Float32Array(renderable.data.normals));
-                setupWebgl2VertexAttribPointer(gl, GLSL300ATTRIBUTE.NORMAL.location, 3);
+                let normalBuffer: WebGLBuffer;
+                if (geometry.data.normals) {
+                    normalBuffer = createWebgl2ArrayBuffer(gl, new Float32Array(geometry.data.normals));
+                    setupWebgl2VertexAttribPointer(gl, GLSL300ATTRIBUTE.NORMAL.location, 3);
+                }
 
                 cache.push({
-                    entityName: action.payload.name,
+                    entityName: action.payload,
                     update: () => {
                         mat4.multiply(modelViewMatrix, cameraCache.camera.data.viewMatrix, transform.data.modelMatrix);
                         mat3.normalFromMat4(normalMatrix, modelViewMatrix);
                         gl.uniformMatrix4fv(modelMatrixLocation, false, transform.data.modelMatrix);
                         gl.uniformMatrix3fv(normalMatrixLocation, false, normalMatrix);
                         gl.bindVertexArray(vao);
-                        gl.drawArrays(gl.TRIANGLES, 0, renderable.data.positions.length);
+                        gl.drawArrays(gl.TRIANGLES, 0, geometry.data.positions.length);
                     },
                     cleanup: () => {
                         gl.deleteBuffer(positionBuffer);
-                        gl.deleteBuffer(uvBuffer);
                         gl.deleteBuffer(normalBuffer);
                         gl.deleteVertexArray(vao);
                     },
@@ -167,7 +150,7 @@ export const createRenderSystem = ({ canvas, world, gl, colorRaster }: RenderSys
         } else if (action.type === 'REMOVE-ENTITY') {
             for (let i = 0; i < cache.length; i++) {
                 const cachedItem = cache[i];
-                if (cachedItem && cachedItem.entityName === action.payload.name) {
+                if (cachedItem && cachedItem.entityName === action.payload) {
                     cachedItem.cleanup();
                     cache[i] = null;
                 }

@@ -1,5 +1,6 @@
 import { vec3 } from 'gl-matrix';
 import { MouseInput, Nullable, System, World, cartesianToSpherical, sphericalToCartesian, lerp } from 'massiv-3d';
+import { ActiveCameraTag } from '../components/active-camera-tag';
 import { PerspectiveCamera } from '../components/perspective-camera';
 
 type OrbitCameraSystemArgs = {
@@ -17,10 +18,12 @@ export const createOrbitCameraSystem = ({ mouseInput, world }: OrbitCameraSystem
     let camera: Nullable<PerspectiveCamera> = null;
 
     world.subscribe((action) => {
-        if (action.type === 'ADD-ENTITY' && action.payload.name === 'DefaultCamera') {
-            camera = action.payload.getComponentByClass(PerspectiveCamera);
-        } else if (action.type === 'REMOVE-ENTITY' && action.payload.name === 'DefaultCamera') {
-            camera = null;
+        if (action.type === 'ADD-ENTITY') {
+            const activeCamera = world.getComponent(action.payload, ActiveCameraTag);
+            if (activeCamera) camera = world.getComponent(action.payload, PerspectiveCamera);
+        } else if (action.type === 'REMOVE-ENTITY') {
+            const activeCamera = world.getComponent(action.payload, ActiveCameraTag);
+            if (activeCamera) camera = null;
         }
     });
 
@@ -45,7 +48,7 @@ export const createOrbitCameraSystem = ({ mouseInput, world }: OrbitCameraSystem
             if (spherical[0] < 0.5) spherical[0] = 0.5;
 
             sphericalToCartesian(cartesian, spherical[0], spherical[1], spherical[2]);
-            camera.setTranslation(cartesian[0], cartesian[1], cartesian[2]).lookAt(center);
+            camera.setTranslation(cartesian[0], cartesian[1], cartesian[2]).lookAt(center[0], center[1], center[2]);
 
             lastMouseX = mouseX;
             lastMouseY = mouseY;

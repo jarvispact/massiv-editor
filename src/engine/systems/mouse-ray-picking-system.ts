@@ -1,8 +1,8 @@
 import { mat4, vec3, vec4 } from 'gl-matrix';
-import { Entity, MouseInput, Nullable, World } from 'massiv-3d';
+import { MouseInput, Nullable, World } from 'massiv-3d';
 import { BoundingBox } from '../components/bounding-box';
 import { PerspectiveCamera } from '../components/perspective-camera';
-import { Renderable } from '../components/renderable';
+import { RenderableTag } from '../components/renderable-tag';
 
 // https://github.com/stackgl/ray-aabb-intersection
 // https://github.com/mattdesl/ray-sphere-intersection
@@ -104,20 +104,21 @@ export const createMouseRayPickingSystem = ({ world, mouseInput, canvas }: Rotat
     return () => {
         const x = getNormalizedMouseX(mouseInput, canvas);
         const y = getNormalizedMouseY(mouseInput, canvas);
-        const camera = (world.getEntityByName('DefaultCamera') as Entity).getComponentByClass(PerspectiveCamera);
+        const camera = world.getComponent('DefaultCamera', PerspectiveCamera);
         castRay(x, y, camera);
+        console.log(result);
 
-        const entities = world.queryEntities(['BoundingBox', 'Renderable']);
-        for (let i = 0; i < entities.length; i++) {
-            const entity = entities[i];
-            const boundingbox = entity.getComponentByClass(BoundingBox);
+        // const entities = world.queryEntities(['BoundingBox', 'Renderable']);
+        // for (let i = 0; i < entities.length; i++) {
+        //     const entity = entities[i];
+        //     const boundingbox = entity.getComponentByClass(BoundingBox);
 
-            vec3.set(result, 0, 0, 0);
-            intersection(result, ray.origin, ray.direction, boundingbox);
+        //     vec3.set(result, 0, 0, 0);
+        //     intersection(result, ray.origin, ray.direction, boundingbox);
 
-            if (result[0] !== 0 && result[1] !== 0 && result[1] !== 0) {
-                console.log('hit', entity.name);
-            }
-        }
+        //     if (result[0] !== 0 && result[1] !== 0 && result[1] !== 0) {
+        //         console.log('hit', entity.name);
+        //     }
+        // }
     };
 };

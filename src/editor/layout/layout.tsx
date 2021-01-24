@@ -6,12 +6,14 @@ type Props = {
 };
 
 const gridTemplateAreas = `
-    'canvas ui'
+    'menu menu'
+    'canvas world-panel'
+    'canvas entity-panel'
 `;
 
 export const Layout = ({ children }: Props) => {
     return (
-        <Box display="grid" gridTemplateAreas={gridTemplateAreas} gridTemplateColumns="auto 300px" w="100vw" h="100vh">
+        <Box display="grid" gridTemplateAreas={gridTemplateAreas} gridTemplateRows="40px 1fr 2fr" gridTemplateColumns="1fr 300px" w="100vw" h="100vh">
             {children}
         </Box>
     );

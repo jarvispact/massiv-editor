@@ -16,5 +16,5 @@ export const Canvas = () => {
         }
     }, []);
 
-    return <Box gridArea="canvas" ref={ref} as="canvas" id="canvas" width="100%" height="100%" bg="appBackground" style={{ outline: 'none' }} />;
+    return <Box gridArea="canvas" ref={ref} as="canvas" id="canvas" width="100%" height="100%" bg="appBackground500" style={{ outline: 'none' }} />;
 };

@@ -33,7 +33,8 @@ type Props = {
 const colorMapper = createMap(0, 255, 0, 1);
 
 const initEngine = async (canvas: HTMLCanvasElement, gl: WebGL2RenderingContext) => {
-    gl.clearColor(colorMapper(45), colorMapper(55), colorMapper(72), 1); // initial dark theme color: [45, 55, 72]
+    const rgb = hexToRgb('#4B5563'); // initial dark theme color (theme.color.appBackground500)
+    if (rgb) gl.clearColor(colorMapper(rgb[0]), colorMapper(rgb[1]), colorMapper(rgb[2]), 1);
 
     const mouseInput = new MouseInput(canvas);
     world.addSystem(createOrbitCameraSystem({ mouseInput, world }));
@@ -64,7 +65,7 @@ export const EngineProvider = ({ children }: Props) => {
     const { theme } = useTheme<Theme>();
 
     useEffect(() => {
-        const appBG = hexToRgb(theme.color.appBackground);
+        const appBG = hexToRgb(theme.color.appBackground500);
         if (gl && appBG) gl.clearColor(colorMapper(appBG[0]), colorMapper(appBG[1]), colorMapper(appBG[2]), 1);
     }, [theme]);
 

@@ -6,8 +6,8 @@ import { Layout } from './editor/layout/layout';
 import { EngineProvider } from './engine/engine-provider';
 import { themes } from './themes';
 import { MenuContainer } from './editor/menu/menu-container';
-import { WorldPanel } from './editor/world-panel/world-panel';
-import { EntityPanel } from './editor/entity-panel/entity-panel';
+import { EntityPanelContainer } from './editor/entity-panel/entity-panel-container';
+import { WorldPanelContainer } from './editor/world-panel/world-panel-container';
 
 const App = () => {
     return (
@@ -17,8 +17,8 @@ const App = () => {
                 <Layout>
                     <MenuContainer />
                     <Canvas />
-                    <WorldPanel />
-                    <EntityPanel />
+                    <WorldPanelContainer />
+                    <EntityPanelContainer />
                 </Layout>
             </EngineProvider>
         </ThemeProvider>

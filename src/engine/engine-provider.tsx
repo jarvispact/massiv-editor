@@ -32,8 +32,8 @@ type Props = {
 
 const colorMapper = createMap(0, 255, 0, 1);
 
-const initEngine = async (canvas: HTMLCanvasElement, gl: WebGL2RenderingContext) => {
-    const rgb = hexToRgb('#4B5563'); // initial dark theme color (theme.color.appBackground500)
+const initEngine = async (canvas: HTMLCanvasElement, gl: WebGL2RenderingContext, theme: Theme) => {
+    const rgb = hexToRgb(theme.color.canvasBackground);
     if (rgb) gl.clearColor(colorMapper(rgb[0]), colorMapper(rgb[1]), colorMapper(rgb[2]), 1);
 
     const mouseInput = new MouseInput(canvas);
@@ -65,12 +65,12 @@ export const EngineProvider = ({ children }: Props) => {
     const { theme } = useTheme<Theme>();
 
     useEffect(() => {
-        const appBG = hexToRgb(theme.color.appBackground500);
+        const appBG = hexToRgb(theme.color.canvasBackground);
         if (gl && appBG) gl.clearColor(colorMapper(appBG[0]), colorMapper(appBG[1]), colorMapper(appBG[2]), 1);
     }, [theme]);
 
     useEffect(() => {
-        if (canvas && gl) initEngine(canvas, gl);
+        if (canvas && gl) initEngine(canvas, gl, theme);
     }, [canvas, gl]);
 
     const context: Ctx = {

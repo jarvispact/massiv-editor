@@ -11,7 +11,7 @@ import { WorldPanelContainer } from './editor/world-panel/world-panel-container'
 
 const App = () => {
     return (
-        <ThemeProvider themes={themes} theme="dark">
+        <ThemeProvider themes={themes} theme="orangeDark">
             <GlobalStyle />
             <EngineProvider>
                 <Layout>

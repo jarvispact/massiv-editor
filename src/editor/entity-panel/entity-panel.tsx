@@ -13,14 +13,12 @@ export const EntityPanel = ({ selectedEntity }: Props) => {
     console.log('entity-panel rerender');
 
     return (
-        <Box gridArea="entity-panel" bg="appBackground500" bls="solid" blc="appBackground900" blw="1px">
-            <Heading bg="appBackground900" p="m">
-                {selectedEntity === null ? 'No Entity selected' : `Entity: ${selectedEntity}`}
-            </Heading>
+        <Box gridArea="entity-panel" bg="editorBackground">
+            <Heading p="m">{selectedEntity === null ? 'No Entity selected' : `Entity: ${selectedEntity}`}</Heading>
             <Box as="ul">
                 <Box p="s">
                     <Heading>Transform</Heading>
-                    <Box display="flex" justifyContent="space-between">
+                    <Box display="flex" justifyContent="space-between" p="s">
                         <Box width="30%">
                             <Label htmlFor="x">X</Label>
                             <Input name="x" value="" onChange={(e) => console.log({ name: e.currentTarget.name, value: e.currentTarget.value })} />

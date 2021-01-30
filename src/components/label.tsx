@@ -5,7 +5,7 @@ import { BoxProps } from 'massiv-design-system';
 
 export const Label: React.FC<BoxProps<Theme, HTMLLabelElement>> = React.forwardRef((props: BoxProps<Theme>, ref) => {
     return (
-        <Box as="label" color="textColor" ref={ref} {...props}>
+        <Box as="label" color="text" ref={ref} {...props}>
             {props.children}
         </Box>
     );

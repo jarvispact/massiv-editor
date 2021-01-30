@@ -5,7 +5,7 @@ import { BoxProps } from 'massiv-design-system';
 
 export const Heading: React.FC<BoxProps<Theme, HTMLHeadingElement>> = React.forwardRef((props: BoxProps<Theme>, ref) => {
     return (
-        <Box as="h3" color="textColor" ref={ref} {...props}>
+        <Box as="h3" color="text" ref={ref} {...props}>
             {props.children}
         </Box>
     );

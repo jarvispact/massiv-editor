@@ -3,16 +3,21 @@ import { Box } from './box';
 import { Theme } from '../themes';
 import { BoxProps } from 'massiv-design-system';
 
-export const Input: React.FC<BoxProps<Theme, HTMLInputElement>> = React.forwardRef((props: BoxProps<Theme, HTMLInputElement>, ref) => {
+type Props = BoxProps<Theme, HTMLInputElement> & {
+    name: string;
+};
+
+export const Input: React.FC<Props> = React.forwardRef((props: Props, ref) => {
     return (
         <Box
             ref={ref}
             as="input"
             width="100%"
-            bg="appBackground900"
+            bg="inputBackground"
             bs="solid"
-            bc="appBackground900"
+            bc="inputBackground"
             bw="1px"
+            br="s"
             {...props}
             id={props.name}
             name={props.name}

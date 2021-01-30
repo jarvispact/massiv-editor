@@ -12,7 +12,7 @@ type Props = {
 export const Menu = React.memo(({ onAddEntity, onThemeChange }: Props) => {
     console.log('menu rerender');
     return (
-        <Box gridArea="menu" bg="appBackground900" display="flex" alignItems="center" bbs="solid" bbc="appBackground900" bbw="1px">
+        <Box gridArea="menu" bg="menuBackground" display="flex" alignItems="center">
             <Box as="button" onClick={() => onAddEntity('plane')}>
                 Add Plane
             </Box>
@@ -28,11 +28,17 @@ export const Menu = React.memo(({ onAddEntity, onThemeChange }: Props) => {
             <Box as="button" onClick={() => onAddEntity('torus')}>
                 Add Torus
             </Box>
-            <Box as="button" onClick={() => onThemeChange('light')}>
-                light theme
+            <Box as="button" onClick={() => onThemeChange('orangeLight')}>
+                orange light theme
             </Box>
-            <Box as="button" onClick={() => onThemeChange('dark')}>
-                dark theme
+            <Box as="button" onClick={() => onThemeChange('orangeDark')}>
+                orange dark theme
+            </Box>
+            <Box as="button" onClick={() => onThemeChange('blueLight')}>
+                blue light theme
+            </Box>
+            <Box as="button" onClick={() => onThemeChange('blueDark')}>
+                blue dark theme
             </Box>
             <Cog />
         </Box>

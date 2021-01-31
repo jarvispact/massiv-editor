@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "start": "webpack serve --mode development",
+    "clean": "rm -rf dist/assets/* dist/*.js",
     "build": "webpack --mode production",
     "lint": "eslint '*/**/*.{js,ts,tsx}' --quiet --fix"
   },

@@ -1,6 +1,7 @@
 import path from 'path';
 import webpack from 'webpack';
 import CopyPlugin from 'copy-webpack-plugin';
+import TerserPlugin from 'terser-webpack-plugin';
 
 const config: webpack.Configuration = {
     entry: './src/index.tsx',
@@ -31,6 +32,17 @@ const config: webpack.Configuration = {
             patterns: [{ from: 'src/assets', to: 'assets' }],
         }),
     ],
+    optimization: {
+        minimize: true,
+        minimizer: [
+            new TerserPlugin({
+                terserOptions: {
+                    keep_classnames: true,
+                    keep_fnames: true,
+                },
+            }),
+        ],
+    },
     devServer: {
         contentBase: path.join(__dirname, 'dist'),
         compress: true,

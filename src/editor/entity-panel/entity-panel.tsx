@@ -14,22 +14,24 @@ export const EntityPanel = ({ selectedEntity }: Props) => {
 
     return (
         <Box gridArea="entity-panel" bg="editorBackground">
-            <Heading p="m">{selectedEntity === null ? 'No Entity selected' : `Entity: ${selectedEntity}`}</Heading>
+            <Heading p="m" bg="editorHeadingBackground">
+                {selectedEntity === null ? 'No Entity selected' : `Entity: ${selectedEntity}`}
+            </Heading>
             <Box as="ul">
                 <Box p="s">
                     <Heading>Transform</Heading>
                     <Box display="flex" justifyContent="space-between" p="s">
                         <Box width="30%">
                             <Label htmlFor="x">X</Label>
-                            <Input name="x" value="" onChange={(e) => console.log({ name: e.currentTarget.name, value: e.currentTarget.value })} />
+                            <Input name="x" value="1" onChange={(e) => console.log({ name: e.currentTarget.name, value: e.currentTarget.value })} />
                         </Box>
                         <Box width="30%">
                             <Label htmlFor="y">Y</Label>
-                            <Input name="y" value="" onChange={(e) => console.log({ name: e.currentTarget.name, value: e.currentTarget.value })} />
+                            <Input name="y" value="1" onChange={(e) => console.log({ name: e.currentTarget.name, value: e.currentTarget.value })} />
                         </Box>
                         <Box width="30%">
                             <Label htmlFor="z">Z</Label>
-                            <Input name="z" value="" onChange={(e) => console.log({ name: e.currentTarget.name, value: e.currentTarget.value })} />
+                            <Input name="z" value="1" onChange={(e) => console.log({ name: e.currentTarget.name, value: e.currentTarget.value })} />
                         </Box>
                     </Box>
                 </Box>

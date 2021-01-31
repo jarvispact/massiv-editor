@@ -70,7 +70,7 @@ export const EngineProvider = ({ children }: Props) => {
     }, [theme]);
 
     useEffect(() => {
-        if (canvas && gl) initEngine(canvas, gl, theme);
+        if (canvas && gl && theme) initEngine(canvas, gl, theme);
     }, [canvas, gl]);
 
     const context: Ctx = {

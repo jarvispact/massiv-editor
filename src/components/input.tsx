@@ -14,6 +14,7 @@ export const Input: React.FC<Props> = React.forwardRef((props: Props, ref) => {
             as="input"
             width="100%"
             bg="inputBackground"
+            color="text"
             bs="solid"
             bc="inputBackground"
             bw="1px"

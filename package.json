@@ -23,7 +23,7 @@
     "buffer": "^6.0.3",
     "gl-matrix": "^3.3.0",
     "massiv-3d": "^0.0.19",
-    "massiv-design-system": "^0.0.52",
+    "massiv-design-system": "^0.0.56",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
     "simplex-noise": "^2.4.0",

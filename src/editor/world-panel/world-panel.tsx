@@ -23,7 +23,7 @@ export const WorldPanel = React.memo(({ entities, selectedEntity, setSelectedEnt
 
     return (
         <Box gridArea="world-panel" bg="editorBackground" height="100%" overflow="hidden">
-            <Heading ref={headingRef} p="m">{`World (${entities.length} Entities)`}</Heading>
+            <Heading ref={headingRef} p="m" bg="editorHeadingBackground">{`World (${entities.length} Entities)`}</Heading>
             <Box as="ul" p="m" overflowY="auto" height={headingHeight === null ? '100%' : `calc(100% - ${headingHeight}px)`}>
                 {entities.length
                     ? entities.map((entity) => (

@@ -1,8 +1,8 @@
 import React from 'react';
-import { Box } from './box';
-import { Theme } from '../themes';
+import { Box } from '../../components/box';
+import { Theme } from '../../themes';
 import { BoxProps } from 'massiv-design-system';
-import { Text } from './text';
+import { Text } from '../../components/text';
 
 type Props = BoxProps<Theme> & {
     icon?: React.ReactNode;

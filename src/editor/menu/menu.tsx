@@ -20,7 +20,7 @@ type Props = {
     onThemeChange: (theme: ThemeKey) => void;
 };
 
-const dropdownProps = (width: string) => ({ bg: 'menuDropdownBackground', width, br: 's', boxShadow: 'l', as: 'ul' as React.ElementType });
+const dropdownProps = (width: string) => ({ bg: 'menuDropdownBackground', width, br: 's', boxShadow: 'menuDropdown', as: 'ul' as React.ElementType });
 
 const FileMenuButton = () => {
     return (

@@ -48,21 +48,48 @@ const blue = {
     secondary900: '#8c2958',
 } as const;
 
+const light = {
+    canvasBackground: defaultTheme.color.gray300,
+    editorBackground: defaultTheme.color.gray100,
+    editorHeadingBackground: defaultTheme.color.gray200,
+    menuBackground: defaultTheme.color.gray100,
+    menuDropdownBackground: defaultTheme.color.gray100,
+    menuDropdownHoverBackground: defaultTheme.color.gray200,
+    menuDropdownDividerBackground: defaultTheme.color.gray200,
+    text: defaultTheme.color.gray900,
+    inputBackground: '#ffffff',
+} as const;
+
+const dark = {
+    canvasBackground: defaultTheme.color.gray900,
+    editorBackground: defaultTheme.color.gray700,
+    editorHeadingBackground: defaultTheme.color.gray800,
+    menuBackground: defaultTheme.color.gray700,
+    menuDropdownBackground: defaultTheme.color.gray700,
+    menuDropdownHoverBackground: defaultTheme.color.gray800,
+    menuDropdownDividerBackground: defaultTheme.color.gray800,
+    text: defaultTheme.color.gray100,
+    inputBackground: defaultTheme.color.gray900,
+} as const;
+
+const lightShadow = {
+    ...defaultTheme.boxShadow,
+    menuDropdown: `2px 2px 6px 2px ${defaultTheme.color.gray500}`,
+} as const;
+
+const darkShadow = {
+    ...defaultTheme.boxShadow,
+    menuDropdown: `2px 2px 6px 2px rgba(0, 0, 0, 0.7)`,
+} as const;
+
 const orangeLight = createCustomTheme({
     ...defaultTheme,
     color: {
         ...defaultTheme.color,
         ...orange,
-        canvasBackground: defaultTheme.color.gray200,
-        editorBackground: defaultTheme.color.gray300,
-        editorHeadingBackground: defaultTheme.color.gray400,
-        menuBackground: defaultTheme.color.gray300,
-        menuDropdownBackground: defaultTheme.color.gray100,
-        menuDropdownHoverBackground: defaultTheme.color.gray200,
-        menuDropdownDividerBackground: defaultTheme.color.gray200,
-        text: defaultTheme.color.gray900,
-        inputBackground: defaultTheme.color.gray100,
+        ...light,
     },
+    boxShadow: lightShadow,
 });
 
 const orangeDark = createCustomTheme({
@@ -70,16 +97,9 @@ const orangeDark = createCustomTheme({
     color: {
         ...defaultTheme.color,
         ...orange,
-        canvasBackground: defaultTheme.color.gray600,
-        editorBackground: defaultTheme.color.gray700,
-        editorHeadingBackground: defaultTheme.color.gray800,
-        menuBackground: defaultTheme.color.gray700,
-        menuDropdownBackground: defaultTheme.color.gray800,
-        menuDropdownHoverBackground: defaultTheme.color.gray700,
-        menuDropdownDividerBackground: defaultTheme.color.gray700,
-        text: defaultTheme.color.gray100,
-        inputBackground: defaultTheme.color.gray900,
+        ...dark,
     },
+    boxShadow: darkShadow,
 });
 
 const blueLight = createCustomTheme({
@@ -87,16 +107,9 @@ const blueLight = createCustomTheme({
     color: {
         ...defaultTheme.color,
         ...blue,
-        canvasBackground: defaultTheme.color.gray200,
-        editorBackground: defaultTheme.color.gray300,
-        editorHeadingBackground: defaultTheme.color.gray400,
-        menuBackground: defaultTheme.color.gray300,
-        menuDropdownBackground: defaultTheme.color.gray100,
-        menuDropdownHoverBackground: defaultTheme.color.gray200,
-        menuDropdownDividerBackground: defaultTheme.color.gray200,
-        text: defaultTheme.color.gray900,
-        inputBackground: defaultTheme.color.gray100,
+        ...light,
     },
+    boxShadow: lightShadow,
 });
 
 const blueDark = createCustomTheme({
@@ -104,16 +117,9 @@ const blueDark = createCustomTheme({
     color: {
         ...defaultTheme.color,
         ...blue,
-        canvasBackground: defaultTheme.color.gray600,
-        editorBackground: defaultTheme.color.gray700,
-        editorHeadingBackground: defaultTheme.color.gray800,
-        menuBackground: defaultTheme.color.gray700,
-        menuDropdownBackground: defaultTheme.color.gray800,
-        menuDropdownHoverBackground: defaultTheme.color.gray700,
-        menuDropdownDividerBackground: defaultTheme.color.gray700,
-        text: defaultTheme.color.gray100,
-        inputBackground: defaultTheme.color.gray900,
+        ...dark,
     },
+    boxShadow: darkShadow,
 });
 
 export const themes = {
